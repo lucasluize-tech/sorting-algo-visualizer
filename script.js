@@ -7,8 +7,9 @@ const arrayContainer = document.querySelectorAll(".array-container");
 const submitForm = document.querySelector("#form");
 // to change page color
 const PAGE_COLOR = "#540cee";
-const DELAY_TIME = 100;
+const DELAY_TIME = 300; // in milliseconds
 
+// start function to call the algorithm for each button
 async function start(container, algorithm) {
   console.log(`using ${algorithm} on ${ARRAY}`);
   switch (algorithm) {
@@ -39,13 +40,15 @@ async function start(container, algorithm) {
 
 // UTILITIES
 
+// highlight the bars that are being compared
 function highlightBars(container, index1, index2) {
   const bars = container.querySelectorAll(".bar");
   if (bars[index1] === undefined || bars[index2] === undefined) return;
-  bars[index1].classList.add("bg-blue-200");
-  bars[index2].classList.add("bg-purple-200");
+  bars[index1].style.backgroundColor = "#2f6e83";
+  bars[index2].style.backgroundColor = "#b068b0";
 }
 
+// modify the height of the bars that are being compared
 function updateBarHeights(container, index1, index2, arr) {
   const minVal = Math.min(...arr);
   const maxVal = Math.max(...arr);
@@ -71,6 +74,7 @@ function updateBarHeights(container, index1, index2, arr) {
   bars[index2].innerHTML = `${arr[index2]}`;
 }
 
+// make sure the final array is sorted and the heights are updated
 function updateFinal(container, arr) {
   const bars = container.querySelectorAll(".bar");
   const minVal = Math.min(...arr);
@@ -83,6 +87,7 @@ function updateFinal(container, arr) {
   }
 }
 
+// reset the highlights
 function resetHighlights() {
   const bars = document.querySelectorAll(".bar");
   bars.forEach((bar) => (bar.style.backgroundColor = PAGE_COLOR)); // Reset to original color
@@ -111,9 +116,11 @@ async function bubbleSort(container, arr) {
   return arr;
 }
 
+// sleep function to introduce a small delay
 function sleep(ms) {
   return new Promise((resolve) => setTimeout(resolve, ms));
 }
+
 async function selectionSort(container, arr) {
   let len = arr.length;
   for (let i = 0; i < len; i++) {
@@ -134,6 +141,7 @@ async function selectionSort(container, arr) {
       updateBarHeights(container, i, min, arr);
     }
   }
+  updateFinal(container, arr);
   console.log("sorted -->", arr);
   return arr;
 }
@@ -190,6 +198,7 @@ async function mergeSortIterative(container, arr) {
       }
     }
   }
+  updateFinal(container, arr);
   console.log("sorted -->", arr);
   return arr;
 }
@@ -236,6 +245,7 @@ async function quickSortIterative(container, arr) {
       stack.push(h);
     }
   }
+  updateFinal(container, arr);
   console.log("sorted -->", arr);
   return arr;
 }
@@ -265,21 +275,26 @@ async function partition(container, arr, low, high) {
 
   return i + 1;
 }
+// ------------------------------
+// START OF THE PROGRAM
 
 let ARRAY = [];
 let array_copy = [];
+let lastSelected = null;
 
-// there are utilities for the bar chart.
+// generate random values for the array
 function generateRandomValues(num) {
   for (let i = 0; i < num; i++) {
     ARRAY.push(Math.floor(Math.random() * 100));
   }
-  array_copy = [...ARRAY];
+  array_copy = [...ARRAY]; // copy to preserve the original array state
 }
 
+// normalize the values to fit the bar chart
 function normalizeValue(value, min, max, newMin, newMax) {
   return ((value - min) / (max - min)) * (newMax - newMin) + newMin;
 }
+
 // here we generate the bar chart on every array container
 function generateBarChart(arr) {
   const barChart = document.createElement("div");
@@ -300,8 +315,9 @@ function generateBarChart(arr) {
   return barChart;
 }
 
-let lastSelected = null;
+// Events
 
+// submit form to generate random values and append the bar chart
 submitForm.addEventListener("submit", function (e) {
   e.preventDefault();
   const slider = document.querySelector(".slider");
@@ -327,6 +343,8 @@ submitForm.addEventListener("submit", function (e) {
   // show message
   document.querySelector("#message").hidden = false;
 });
+
+// each algorithm button calls the start their function inside their own bar container
 
 bubbleSortButton.addEventListener("click", async function () {
   const container = document.querySelector("#bubble-container");
@@ -362,3 +380,5 @@ quickSortButton.addEventListener("click", async function () {
   await start(container, name);
   ARRAY = [...array_copy];
 });
+// PROGRAM END HERE
+// ------------------------------
