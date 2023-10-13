@@ -1,0 +1,106 @@
+@function useZoom($size) {
+  @return $size * $zoom;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  font-family: "Roboto", sans-serif;
+}
+
+/* container for each sorting algo */
+section {
+  max-width: useZoom(80vw);
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  margin: useZoom(2rem) auto;
+}
+
+.controls {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  width: useZoom(30vw);
+}
+
+navbar ul {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100vw;
+  margin: 0 auto 1rem auto;
+  padding: useZoom(2rem) useZoom(1rem);
+  position: sticky;
+  top: 0;
+  background-color: #540cee;
+  box-shadow: 0px useZoom(5px) useZoom(5px) 0px rgba(0, 0, 0, 0.5);
+  height: useZoom(2rem);
+  color: white;
+}
+
+.divider {
+  width: useZoom(80vw);
+  height: useZoom(1px);
+  background-color: rgba(0, 0, 0, 0.2);
+  margin: useZoom(4.5rem) auto;
+}
+
+.array-container {
+  height: useZoom(30vh);
+  width: useZoom(50vw);
+  border: useZoom(1px) solid black;
+  border-radius: useZoom(10px);
+  box-shadow: 0px 0px useZoom(5px) 0px rgba(0, 0, 0, 0.5);
+  margin: useZoom(1rem) auto;
+  overflow: auto;
+}
+
+.bar-chart {
+  display: flex;
+  justify-content: center;
+  align-items: flex-end;
+  height: 100%;
+  width: 100%;
+  background-color: #caeef9;
+  background-repeat: repeat;
+}
+
+.bar {
+  width: useZoom(2rem);
+  background-color: #540cee;
+  margin: 0.3rem useZoom(1px);
+  margin-bottom: 0;
+  border-radius: useZoom(10px) useZoom(10px) 0 0;
+  color: white;
+  font-size: useZoom(1rem);
+  display: flex;
+  justify-content: center;
+  align-items: start;
+  font-weight: bolder;
+  font-family: "", sans-serif;
+}
+.bar:hover {
+  background-color: #a2a1a2;
+  color: black;
+  cursor: pointer;
+}
+
+.active {
+  background-color: #a2a1a2;
+  color: black;
+}
+
+#message {
+  display: none;
+}
+
+.show {
+  display: block;
+}
